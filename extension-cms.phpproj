@@ -24,9 +24,15 @@
     <Compile Include="ContentManagementExtensionHooks.php">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="index.php" />
+    <Compile Include="DataObjects\Revision.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataObjects\Page.php">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DataObjects" />
     <Folder Include="Templates" />
     <Folder Include="Page" />
   </ItemGroup>

@@ -18,6 +18,8 @@ class ContentManagementExtension extends Extension
 	{
 		$files = array(
 			"ContentManagementExtensionHooks" => "ContentManagementExtensionHooks.php",
+			"Page" => "DataObjects/Page.php",
+			"Revision" => "DataObjects/Revision.php",
 		);
 		
 		return array_key_exists($class, $files) ? $files[$class] : null;
