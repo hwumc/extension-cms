@@ -8,6 +8,7 @@ class Page extends DataObject
     protected $title;
     protected $accessright;
     protected $revision;
+    protected $parent;
     
     public function getSlug()
     {
@@ -47,6 +48,16 @@ class Page extends DataObject
     public function setRevision($revision)
     {
         $this->revision = $revision;   
+    } 
+    
+    public function getParent()
+    {
+        return $this->parent;
+    }
+    
+    public function setParent($parent)
+    {
+        $this->parent = $parent;   
     }
     
     public function delete() 
