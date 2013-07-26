@@ -62,11 +62,55 @@ class Page extends DataObject
     
     public function delete() 
     {
-        throw new NotImplementedException();
+        global $gDatabase;
+		$statement = $gDatabase->prepare("DELETE FROM `page` WHERE id = :id LIMIT 1;");
+		$statement->bindParam(":id", $this->id);
+		$statement->execute();
+
+		$this->id = 0;
+		$this->isNew = true;
     }
     
     public function save()
     {
-        throw new NotImplementedException();
+        global $gDatabase;
+
+        $godmodevalue = 0;
+
+        if($this->isNew)
+        { // insert
+            $statement = $gDatabase->prepare("INSERT INTO page VALUES (null, :slug, :title, :accessright, :revision, :parent );");
+            $statement->bindParam(":slug", $this->slug);
+            $statement->bindParam(":title", $this->title);
+            $statement->bindParam(":accessright", $this->accessright);
+            $statement->bindParam(":revision", $this->revision);
+            $statement->bindParam(":parent", $this->parent);
+
+            if($statement->execute())
+            {
+                $this->isNew = false;
+                $this->id = $gDatabase->lastInsertId();
+            }
+            else
+            {
+                throw new SaveFailedException();
+            }
+        }
+        else
+        { // update
+            $statement = $gDatabase->prepare("UPDATE page SET slug = :slug, title = :title, accessright = :accessright, revision = :revision, parent = :parent WHERE id = :id LIMIT 1;");
+            $statement->bindParam(":slug", $this->slug);
+            $statement->bindParam(":title", $this->title);
+            $statement->bindParam(":accessright", $this->accessright);
+            $statement->bindParam(":revision", $this->revision);
+            $statement->bindParam(":parent", $this->parent);
+
+            $statement->bindParam(":id", $this->id);
+
+            if(!$statement->execute())
+            {
+                throw new SaveFailedException();
+            }
+        }
     }
 }
