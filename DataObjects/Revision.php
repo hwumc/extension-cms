@@ -60,9 +60,9 @@ class Revision extends DataObject
 
 		if($this->isNew)
 		{ // insert
-			$statement = $gDatabase->prepare("INSERT INTO revision VALUES (null, :user, :timestamp, :page, :text);");
+			$statement = $gDatabase->prepare("INSERT INTO revision VALUES (null, :user, null, :page, :text);");
 			$statement->bindParam(":user", $this->user);
-			$statement->bindParam(":timestamp", $this->timestamp);
+            // DEFAULT CURRENT TIMESTAMP
 			$statement->bindParam(":page", $this->page);
 			$statement->bindParam(":text", $this->text);
 			if($statement->execute())

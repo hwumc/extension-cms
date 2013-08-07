@@ -30,10 +30,25 @@
     <Compile Include="DataObjects\Page.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Page\PageManagePages.php">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataObjects" />
     <Folder Include="Templates" />
     <Folder Include="Page" />
+    <Folder Include="Templates\cms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates\cms\create.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Templates\cms\delete.tpl">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Templates\cms\list.tpl">
+      <SubType>Content</SubType>
+    </Content>
   </ItemGroup>
 </Project>
