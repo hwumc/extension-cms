@@ -19,4 +19,17 @@ class ContentManagementExtensionHooks
         
         return $smarty;
     }
+    
+    public static function getExtensionContent( $args ) {      
+        foreach(Page::getArray() as $p) {
+            if($p->getSlug() == $args[1])
+            {
+                $page = new PageContentManagementContentBase();
+                $page->page = $p;
+                return $page;
+            }
+        }
+        
+        return null;
+    }
 }

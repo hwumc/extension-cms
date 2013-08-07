@@ -20,6 +20,7 @@ class ContentManagementExtension extends Extension
 			"ContentManagementExtensionHooks" => "ContentManagementExtensionHooks.php",
 			"Page" => "DataObjects/Page.php",
 			"Revision" => "DataObjects/Revision.php",
+            "PageContentManagementContentBase" => "PageContentManagementContentBase.php",
 		);
 		
 		return array_key_exists($class, $files) ? $files[$class] : null;
@@ -29,6 +30,7 @@ class ContentManagementExtension extends Extension
 	{
 		Hooks::register( "BuildPageSearchPaths", array("ContentManagementExtensionHooks","buildPageSearchPaths"));
         Hooks::register( "PostSetupSmarty", array("ContentManagementExtensionHooks","smartySetup"));
+        Hooks::register( "GetExtensionContent", array("ContentManagementExtensionHooks","getExtensionContent"));
 	}
 	
 
