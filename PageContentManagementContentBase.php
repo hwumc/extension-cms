@@ -1,13 +1,7 @@
 <?php
+// check for invalid entry point
+if(!defined("HMS")) die("Invalid entry point");
 
-/**
- * PageContentManagementContentBase short summary.
- *
- * PageContentManagementContentBase description.
- *
- * @version 1.0
- * @author stwalkerster
- */
 class PageContentManagementContentBase extends PageBase
 {
     var $page = null;
