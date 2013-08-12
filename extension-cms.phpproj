@@ -17,6 +17,10 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'beta' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\beta\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="ContentManagementExtension.php">
       <SubType>Code</SubType>

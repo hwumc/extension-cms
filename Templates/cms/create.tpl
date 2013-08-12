@@ -1,4 +1,20 @@
 {extends file="base.tpl"}
+{block name="head"}
+	<script src="{$cWebPath}/scripts/tinymce/tinymce.min.js"></script>
+	<script type="text/javascript">
+	tinymce.init({
+		selector: "textarea",
+		plugins: [
+			"advlist autolink lists link image charmap preview anchor",
+			"searchreplace visualblocks code fullscreen",
+			"insertdatetime media table contextmenu paste",
+			"hr wordcount visualchars nonbreaking directionality textcolor"
+		],
+		removed_menuitems: 'newdocument',
+		content_css: '{$cWebPath}/style/bootstrap-responsive.min.css',
+	});
+	</script>
+{/block}
 {block name="pagedescription"}{/block}
 {block name="body"}
 <form class="form-horizontal" method="post">
