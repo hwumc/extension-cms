@@ -78,7 +78,13 @@ class PageManagePages extends PageBase
             $g->setTitle ( WebRequest::post( "cmspagetitle" ) );
 			$g->setSlug( WebRequest::post( "slug" ) );
 			$g->setAccessRight( WebRequest::post( "accessright" ) );
-			$g->save();
+            $menugroup = MenuGroup::getBySlug( WebRequest::post( "menugroup" ) );
+            if( $menugroup != null ) {
+		        $g->setMenuGroup( $menugroup->getId() );
+            } else {
+                $g->setMenuGroup( null );
+            }
+            $g->save();
             
             $r = new Revision();
             $r->setPage( $g->getId() );
@@ -98,6 +104,13 @@ class PageManagePages extends PageBase
                 $rightnames[] = "\"" . $v . "\"";
             }  
             $this->mSmarty->assign( "jsrightslist", "[" . implode(",", $rightnames ) . "]" );
+            
+            $menugroups= array();
+            foreach (MenuGroup::getArray() as $v)
+            {
+                $menugroups[] = "\"" . $v->getSlug() . "\"";
+            }  
+            $this->mSmarty->assign( "jsmenugrouplist", "[" . implode(",", $menugroups ) . "]" );
 		
             $rev = Revision::getById( $g->getRevision() );
             $content = "";
@@ -110,7 +123,12 @@ class PageManagePages extends PageBase
 			$this->mSmarty->assign( "slug", $g->getSlug() );
 			$this->mSmarty->assign( "accessright", $g->getAccessRight() );
             $this->mSmarty->assign( "pagecontent", $content );
-            
+            $loadingMenuGroup = MenuGroup::getById( $g->getMenuGroup() );
+            if($loadingMenuGroup != null) {
+                $this->mSmarty->assign( "menugroup", $loadingMenuGroup->getSlug() );
+            } else {
+                $this->mSmarty->assign( "menugroup", "" );
+            }
 		}
 	}
 	
@@ -144,6 +162,10 @@ class PageManagePages extends PageBase
 			$g->setTitle( WebRequest::post( "cmspagetitle" ) );
 			$g->setSlug( WebRequest::post( "slug" ) );
             $g->setAccessRight( WebRequest::post( "accessright" ) );
+            $menugroup = MenuGroup::getBySlug( WebRequest::post( "menugroup" ) );
+            if( $menugroup != null ) {
+		        $g->setMenuGroup( $menugroup->getId() );
+            }
 			$g->save();
             
             $r = new Revision();
@@ -164,12 +186,20 @@ class PageManagePages extends PageBase
                 $rightnames[] = "\"" . $v . "\"";
             }  
             $this->mSmarty->assign( "jsrightslist", "[" . implode(",", $rightnames ) . "]" );
+            
+            $menugroups= array();
+            foreach (MenuGroup::getArray() as $v)
+            {
+                $menugroups[] = "\"" . $v->getSlug() . "\"";
+            }  
+            $this->mSmarty->assign( "jsmenugrouplist", "[" . implode(",", $menugroups ) . "]" );
 		
 			$this->mBasePage = "cms/create.tpl";
 			$this->mSmarty->assign( "cmspagetitle", "" );
 			$this->mSmarty->assign( "slug", "" );
             $this->mSmarty->assign( "accessright", "public" );
             $this->mSmarty->assign( "pagecontent", "");
+            $this->mSmarty->assign( "menugroup", "");
 		}
 	}
 }

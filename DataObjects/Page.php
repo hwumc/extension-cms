@@ -9,6 +9,7 @@ class Page extends DataObject
     protected $accessright;
     protected $revision;
     protected $parent;
+    protected $menugroup;
     
     public function getSlug()
     {
@@ -60,6 +61,16 @@ class Page extends DataObject
         $this->parent = $parent;   
     }
     
+    public function getMenuGroup()
+    {
+        return $this->menugroup;   
+    }
+    
+    public function setMenuGroup($menugroup)
+    {
+        $this->menugroup = $menugroup;   
+    }
+    
     public function delete() 
     {
         global $gDatabase;
@@ -79,12 +90,13 @@ class Page extends DataObject
 
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO page VALUES (null, :slug, :title, :accessright, :revision, :parent );");
+            $statement = $gDatabase->prepare("INSERT INTO page VALUES (null, :slug, :title, :accessright, :revision, :parent, :menugroup );");
             $statement->bindParam(":slug", $this->slug);
             $statement->bindParam(":title", $this->title);
             $statement->bindParam(":accessright", $this->accessright);
             $statement->bindParam(":revision", $this->revision);
             $statement->bindParam(":parent", $this->parent);
+            $statement->bindParam(":menugroup", $this->menugroup);
 
             if($statement->execute())
             {
@@ -98,12 +110,13 @@ class Page extends DataObject
         }
         else
         { // update
-            $statement = $gDatabase->prepare("UPDATE page SET slug = :slug, title = :title, accessright = :accessright, revision = :revision, parent = :parent WHERE id = :id LIMIT 1;");
+            $statement = $gDatabase->prepare("UPDATE page SET slug = :slug, title = :title, accessright = :accessright, revision = :revision, parent = :parent, menugroup = :menugroup WHERE id = :id LIMIT 1;");
             $statement->bindParam(":slug", $this->slug);
             $statement->bindParam(":title", $this->title);
             $statement->bindParam(":accessright", $this->accessright);
             $statement->bindParam(":revision", $this->revision);
             $statement->bindParam(":parent", $this->parent);
+            $statement->bindParam(":menugroup", $this->menugroup);
 
             $statement->bindParam(":id", $this->id);
 
