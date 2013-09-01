@@ -20,10 +20,17 @@ class ContentManagementExtensionHooks
         return $smarty;
     }
     
-    public static function getExtensionContent( $args ) {      
+    public static function getExtensionContent( $args ) {    
+        $user = User::getById( Session::getLoggedInUser() );
+        
         foreach(Page::getArray() as $p) {
             if($p->getSlug() == $args[1])
             {
+                if(! $user->isAllowed( $p->getAccessRight() ) )
+                {
+                    continue;   
+                }
+                
                 $page = new PageContentManagementContentBase();
                 $page->page = $p;
                 return $page;

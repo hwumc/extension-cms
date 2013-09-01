@@ -34,6 +34,9 @@
     <Compile Include="DataObjects\Page.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CMSMainPageContentProvider.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PageContentManagementContentBase.php">
       <SubType>Code</SubType>
     </Compile>
