@@ -21,6 +21,7 @@ class ContentManagementExtension extends Extension
 			"Page" => "DataObjects/Page.php",
 			"Revision" => "DataObjects/Revision.php",
             "PageContentManagementContentBase" => "PageContentManagementContentBase.php",
+            "CMSMainPageContentProvider" => "CMSMainPageContentProvider.php",
 		);
 		
 		return array_key_exists($class, $files) ? $files[$class] : null;
