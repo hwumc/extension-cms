@@ -52,17 +52,11 @@
 	<fieldset>
 		<legend>{message name="{$pageslug}-create-header-content"}</legend>
 
-		<div class="control-group">
-		<label class="control-label" for="pagecontent">{message name="{$pageslug}-create-pagecontent"}</label>
-		<div class="controls">
-			<textarea id="pagecontent" name="pagecontent"
+		<textarea id="pagecontent" name="pagecontent"
 				class="span12" rows="20"
 				placeholder="{message name="{$pageslug}-create-pagecontent-placeholder"}" 
 				{if $allowEdit == "false"}disabled="true" {/if}
 					>{$pagecontent}</textarea>
-			<span class="help-block">{message name="{$pageslug}-create-pagecontent-help"}</span>
-		</div>
-	</div>
 	</fieldset>
 	
 	<div class="control-group">
