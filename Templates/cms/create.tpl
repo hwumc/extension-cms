@@ -44,7 +44,7 @@
 	<div class="control-group">
 		<label class="control-label" for="accessright">{message name="{$pageslug}-create-menugroup"}</label>
 		<div class="controls">
-			<input type="text" id="menugroup" name="menugroup" placeholder="{message name="{$pageslug}-create-menugroup-placeholder"}" value="{$menugroup}" {if $allowEdit == "false"}disabled="true" {/if} data-provide="typeahead" data-items="4" data-source='{$jsmenugrouplist}'  />
+			<input type="text" id="menugroup" name="menugroup" placeholder="{message name="{$pageslug}-create-menugroup-placeholder"}" value="{$menugroup}" {if $allowEdit == "false"}disabled="true" {/if} data-provide="typeahead" data-items="4" data-source='{$jsmenugrouplist}' required="true" />
 			<span class="help-inline">{message name="{$pageslug}-create-menugroup-help"}</span>
 		</div>
 	</div>

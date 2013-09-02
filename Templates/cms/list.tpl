@@ -10,6 +10,7 @@
 					<th>{message name="{$pageslug}-text-pagetitle"}</th>
 					<th>{message name="{$pageslug}-text-pageslug"}</th>
 					<th>{message name="{$pageslug}-text-accessright"}</th>
+					<th>{message name="{$pageslug}-text-menugroup"}</th>
 					<th>{message name="{$pageslug}-text-viewpage"}</th>
 					{if $allowEdit == "true"}<th>{message name="{$pageslug}-text-editpage"}</th>{/if}
 					{if $allowDelete == "true"}<th>{message name="{$pageslug}-text-deletepage"}</th>{/if}
@@ -21,6 +22,7 @@
 						<th>{$page->getTitle()|escape}</th>
 						<td>{$page->getSlug()|escape}</td>
 						<td>{$page->getAccessRight()|escape}</td>
+						<td>{$page->getMenuGroupObject()->getSlug()|escape}</td>
 						<td><a href="{$cScriptPath}/{$page->getSlug()}" class="btn btn-small">{message name="{$pageslug}-button-viewpage"}</a></td>
 						{if $allowEdit == "true"}<td><a href="{$cScriptPath}/{$pageslug}/edit/{$pageid}" class="btn btn-small">{message name="{$pageslug}-button-editpage"}</a></td>{/if}
 						{if $allowDelete == "true"}<td><a href="{$cScriptPath}/{$pageslug}/delete/{$pageid}" class="btn btn-small btn-danger">{message name="{$pageslug}-button-deletepage"}</a></td>{/if}

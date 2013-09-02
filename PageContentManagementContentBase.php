@@ -12,4 +12,5 @@ class PageContentManagementContentBase extends PageBase
         $this->mSmarty->assign( "cmsPageHeader", $this->page->getTitle() );
         $this->mBasePage = "cms/cmspage.tpl";
     }
+   
 }

@@ -64,6 +64,11 @@ class Page extends DataObject
     public function getMenuGroup()
     {
         return $this->menugroup;   
+    }    
+    
+    public function getMenuGroupObject()
+    {
+        return MenuGroup::getById($this->menugroup);   
     }
     
     public function setMenuGroup($menugroup)

@@ -199,7 +199,7 @@ class PageManagePages extends PageBase
 			$this->mSmarty->assign( "slug", "" );
             $this->mSmarty->assign( "accessright", "public" );
             $this->mSmarty->assign( "pagecontent", "");
-            $this->mSmarty->assign( "menugroup", "");
+            $this->mSmarty->assign( "menugroup", "main");
 		}
 	}
 }

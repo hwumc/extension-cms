@@ -32,6 +32,7 @@ class ContentManagementExtension extends Extension
 		Hooks::register( "BuildPageSearchPaths", array("ContentManagementExtensionHooks","buildPageSearchPaths"));
         Hooks::register( "PostSetupSmarty", array("ContentManagementExtensionHooks","smartySetup"));
         Hooks::register( "GetExtensionContent", array("ContentManagementExtensionHooks","getExtensionContent"));
+        Hooks::register( "PreCreateMenu", array("ContentManagementExtensionHooks","setupMenu"));
 	}
 	
 
