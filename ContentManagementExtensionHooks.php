@@ -59,6 +59,10 @@ class ContentManagementExtensionHooks
                 continue;   
             }
             
+            if( $page->getSlug() == "main" ) {
+                continue;   
+            }
+            
             $slug = $page->getMenuGroupObject()->getSlug();
             
             $menu[ strtolower($slug) ][ "items" ][ $page->getSlug() ] = array(
