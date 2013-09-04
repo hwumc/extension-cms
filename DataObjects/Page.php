@@ -131,4 +131,28 @@ class Page extends DataObject
             }
         }
     }
+
+    public function getHistory()
+    {
+        global $gDatabase;
+		$statement = $gDatabase->prepare("SELECT 
+	r.id, 
+	coalesce (r.user, 0) AS userid, 
+	coalesce (u.username, '(deleted user)') AS username, 
+	r.timestamp, 
+	r.text, 
+	r.page, 
+	p.title 
+FROM revision r
+	LEFT JOIN `page` p ON p.id = r.page
+	LEFT JOIN `user` u ON u.id = r.user
+WHERE r.page = :pageid
+;");
+        $statement->bindParam(":pageid", $this->id);
+		$statement->execute();
+
+		$result = $statement->fetchAll( PDO::FETCH_ASSOC );
+
+		return $result;   
+    }
 }

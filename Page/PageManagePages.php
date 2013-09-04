@@ -118,11 +118,14 @@ class PageManagePages extends PageBase
                 $content = $rev->getText();
             }
             
+            $history = $g->getHistory();
+            
 			$this->mBasePage = "cms/create.tpl";
 			$this->mSmarty->assign( "cmspagetitle", $g->getTitle() );
 			$this->mSmarty->assign( "slug", $g->getSlug() );
 			$this->mSmarty->assign( "accessright", $g->getAccessRight() );
             $this->mSmarty->assign( "pagecontent", $content );
+            $this->mSmarty->assign( "history", $history );
             $loadingMenuGroup = MenuGroup::getById( $g->getMenuGroup() );
             if($loadingMenuGroup != null) {
                 $this->mSmarty->assign( "menugroup", $loadingMenuGroup->getSlug() );
@@ -195,6 +198,8 @@ class PageManagePages extends PageBase
             $this->mSmarty->assign( "jsmenugrouplist", "[" . implode(",", $menugroups ) . "]" );
 		
 			$this->mBasePage = "cms/create.tpl";
+            $history = array();
+            $this->mSmarty->assign( "history", $history );
 			$this->mSmarty->assign( "cmspagetitle", "" );
 			$this->mSmarty->assign( "slug", "" );
             $this->mSmarty->assign( "accessright", "public" );

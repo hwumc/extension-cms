@@ -66,4 +66,11 @@
 		</div>
 	</div>
 </form>
+
+<h3>{message name="{$pageslug}-create-header-history"}</h3>
+<ul>
+{foreach from="$history" item="rev"}
+ <li><strong>Revision {$rev.id}</strong> @ {$rev.timestamp} by {$rev.username}</li>
+{/foreach}
+</ul>
 {/block}
