@@ -67,10 +67,22 @@
 	</div>
 </form>
 
-<h3>{message name="{$pageslug}-create-header-history"}</h3>
-<ul>
-{foreach from="$history" item="rev"}
- <li><strong>Revision {$rev.id}</strong> @ {$rev.timestamp} by {$rev.username}</li>
-{/foreach}
-</ul>
+<div class="accordion" id="accordion">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
+        {message name="{$pageslug}-create-header-history"}
+      </a>
+    </div>
+    <div id="collapseOne" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <ul>
+			{foreach from="$history" item="rev"}
+				<li><strong>Revision {$rev.id}</strong> @ {$rev.timestamp} by {$rev.username}</li>
+			{/foreach}
+		</ul>
+      </div>
+    </div>
+  </div>
+</div>
 {/block}
