@@ -71,6 +71,19 @@ class Page extends DataObject
         return MenuGroup::getById($this->menugroup);   
     }
     
+    public function getMenuGroupSlug()
+    {
+        $group = $this->getMenuGroupObject();
+        if( $group == null )
+        {
+            return "";
+        }
+        else
+        {
+            return $group->getSlug();
+        }
+    }
+    
     public function setMenuGroup($menugroup)
     {
         $this->menugroup = $menugroup;   
@@ -79,6 +92,14 @@ class Page extends DataObject
     public function delete() 
     {
         global $gDatabase;
+        $statement = $gDatabase->prepare("DELETE FROM `revision` WHERE page = :id;");
+        $statement->bindParam(":id", $this->id);
+		$statement->execute();
+        
+		$statement = $gDatabase->prepare("DELETE FROM `revision` WHERE page = :id;");
+        $statement->bindParam(":id", $this->id);
+		$statement->execute();
+        
 		$statement = $gDatabase->prepare("DELETE FROM `page` WHERE id = :id LIMIT 1;");
 		$statement->bindParam(":id", $this->id);
 		$statement->execute();

@@ -63,15 +63,19 @@ class ContentManagementExtensionHooks
                 continue;   
             }
             
-            $slug = $page->getMenuGroupObject()->getSlug();
-            
-            $menu[ strtolower($slug) ][ "items" ][ $page->getSlug() ] = array(
-                "displayname" => $page->getTitle(),
-                "link" => "/" . $page->getSlug(),
-                "title" => $page->getSlug()
-            );
+            $menugroup = $page->getMenuGroupObject();
+            $slug = "main";
+            if($menugroup != null)
+            {
+                $slug = $menugroup->getSlug();
+                
+                $menu[ strtolower($slug) ][ "items" ][ $page->getSlug() ] = array(
+                    "displayname" => $page->getTitle(),
+                    "link" => "/" . $page->getSlug(),
+                    "title" => $page->getSlug()
+                );
+            }
         }
-        
         
         return $menu;
     }
