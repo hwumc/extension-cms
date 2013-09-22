@@ -101,14 +101,14 @@ class PageManagePages extends PageBase
 			$rightnames= array();
             foreach (Right::getAllRegisteredRights(true) as $v)
             {
-                $rightnames[] = "\"" . $v . "\"";
+                $rightnames[] = "\"" . htmlentities($v) . "\"";
             }  
             $this->mSmarty->assign( "jsrightslist", "[" . implode(",", $rightnames ) . "]" );
             
             $menugroups= array();
             foreach (MenuGroup::getArray() as $v)
             {
-                $menugroups[] = "\"" . $v->getSlug() . "\"";
+                $menugroups[] = "\"" . htmlentities($v->getSlug()) . "\"";
             }  
             $this->mSmarty->assign( "jsmenugrouplist", "[" . implode(",", $menugroups ) . "]" );
 		

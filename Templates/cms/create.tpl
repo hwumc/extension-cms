@@ -78,7 +78,7 @@
       <div class="accordion-inner">
         <ul>
 			{foreach from="$history" item="rev"}
-				<li><strong>Revision {$rev.id}</strong> @ {$rev.timestamp} by {$rev.username}</li>
+				<li><strong>Revision {$rev.id}</strong> @ {$rev.timestamp} by {$rev.username|escape}</li>
 			{/foreach}
 		</ul>
       </div>
