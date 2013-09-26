@@ -89,20 +89,40 @@ class Page extends DataObject
         $this->menugroup = $menugroup;   
     }
     
+    public function canDelete()
+    {
+        return true;   
+    }
+    
     public function delete() 
     {
         global $gDatabase;
-        $statement = $gDatabase->prepare("DELETE FROM `revision` WHERE page = :id;");
-        $statement->bindParam(":id", $this->id);
-		$statement->execute();
+        if(! $gDatabase->beginTransaction())
+        {
+            throw new TransactionAlreadyOpenException();   
+        }
         
-		$statement = $gDatabase->prepare("DELETE FROM `revision` WHERE page = :id;");
-        $statement->bindParam(":id", $this->id);
-		$statement->execute();
+        try
+        {
+            $statement = $gDatabase->prepare("UPDATE `page` SET revision = null WHERE id = :id;");
+            $statement->bindParam(":id", $this->id);
+		    $statement->execute();
         
-		$statement = $gDatabase->prepare("DELETE FROM `page` WHERE id = :id LIMIT 1;");
-		$statement->bindParam(":id", $this->id);
-		$statement->execute();
+		    $statement = $gDatabase->prepare("DELETE FROM `revision` WHERE page = :id;");
+            $statement->bindParam(":id", $this->id);
+	    	$statement->execute();
+        
+		    $statement = $gDatabase->prepare("DELETE FROM `page` WHERE id = :id LIMIT 1;");
+	    	$statement->bindParam(":id", $this->id);
+		    $statement->execute();
+        }
+        catch ( Exception $ex )
+        {
+            $gDatabase->rollback();
+            throw $ex;
+        }
+        
+        $gDatabase->commit();
 
 		$this->id = 0;
 		$this->isNew = true;
