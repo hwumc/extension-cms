@@ -23,8 +23,8 @@
 						<td>{$page->getSlug()|escape}</td>
 						<td>{$page->getAccessRight()|escape}</td>
 						<td>{$page->getMenuGroupSlug()|escape}</td>
-						<td><a href="{$cScriptPath}/{$page->getSlug()}" class="btn btn-small">{message name="{$pageslug}-button-viewpage"}</a></td>
-						{if $allowEdit == "true"}<td><a href="{$cScriptPath}/{$pageslug}/edit/{$pageid}" class="btn btn-small">{message name="{$pageslug}-button-editpage"}</a></td>{/if}
+						<td><a href="{$cScriptPath}/{$page->getSlug()}" class="btn btn-small btn-info">{message name="{$pageslug}-button-viewpage"}</a></td>
+						{if $allowEdit == "true"}<td><a href="{$cScriptPath}/{$pageslug}/edit/{$pageid}" class="btn btn-small btn-warning">{message name="{$pageslug}-button-editpage"}</a></td>{/if}
 						{if $allowDelete == "true"}<td><a href="{$cScriptPath}/{$pageslug}/delete/{$pageid}" class="btn btn-small btn-danger">{message name="{$pageslug}-button-deletepage"}</a></td>{/if}
 					</tr>
 				{/foreach}
