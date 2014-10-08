@@ -97,6 +97,7 @@ class PageManagePages extends PageBase
 			
 			global $cScriptPath;
 			$this->mHeaders[] = ( "Location: " . $cScriptPath . "/ManagePages" );
+            $this->mIsRedirecting = true;
 		} else {
 			$rightnames= array();
             foreach (Right::getAllRegisteredRights(true) as $v)
@@ -149,8 +150,7 @@ class PageManagePages extends PageBase
 			
 			global $cScriptPath;
 			$this->mHeaders[] =  "Location: " . $cScriptPath . "/ManagePages";
-			
-			
+            $this->mIsRedirecting = true;
 		} else {
 			$this->mBasePage = "cms/delete.tpl";
 		}
@@ -182,6 +182,7 @@ class PageManagePages extends PageBase
             
 			global $cScriptPath;
 			$this->mHeaders[] =  "Location: " . $cScriptPath . "/ManagePages";
+            $this->mIsRedirecting = true;
 		} else {
 			$rightnames= array();
             foreach (Right::getAllRegisteredRights(true) as $v)
