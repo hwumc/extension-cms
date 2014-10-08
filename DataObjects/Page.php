@@ -136,7 +136,7 @@ class Page extends DataObject
 
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO page VALUES (null, :slug, :title, :accessright, :revision, :parent, :menugroup );");
+            $statement = $gDatabase->prepare("INSERT INTO page (slug, title, accessright, revision, parent, menugroup) VALUES (:slug, :title, :accessright, :revision, :parent, :menugroup );");
             $statement->bindParam(":slug", $this->slug);
             $statement->bindParam(":title", $this->title);
             $statement->bindParam(":accessright", $this->accessright);
