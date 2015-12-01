@@ -8,7 +8,7 @@ class ContentManagementExtension extends Extension
 	{
 		return array(
 			"name" => "Content Management Framework",
-			"gitviewer" => "https://gerrit.stwalkerster.co.uk/gitweb?p=siteframework/extensions/cms.git;a=tree;h=",
+			"gitviewer" => "https://phabricator.stwalkerster.co.uk/rSFC",
 			"description" => "Content Management utilities for siteframework",
 			"filepath" => dirname(__FILE__),
 		);
