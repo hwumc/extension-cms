@@ -64,4 +64,11 @@
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\siteframework\siteframework.phpproj">
+      <Name>siteframework</Name>
+      <Project>{1d936447-5486-4e58-a682-1822c130bcfa}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
