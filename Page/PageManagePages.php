@@ -21,15 +21,19 @@ class PageManagePages extends PageBase
 				case "edit":
 					$this->editMode( $data );
 					return;
-					break;
+
 				case "delete":
 					$this->deleteMode( $data );
 					return;
-					break;
+
 				case "create":
 					$this->createMode( $data );
 					return;
-					break;
+
+				case "view":
+					$this->viewMode( $data );
+					return;
+
 			}
 	
 		}
@@ -93,27 +97,32 @@ class PageManagePages extends PageBase
             $r->save();
             
             $g->setRevision( $r->getId() );
-			$g->save();            
-			
-			global $cScriptPath;
-			$this->mHeaders[] = ( "Location: " . $cScriptPath . "/ManagePages" );
+            $g->save();
+            
+            global $cScriptPath;
+            $this->mHeaders[] = ( "Location: " . $cScriptPath . "/ManagePages" );
             $this->mIsRedirecting = true;
-		} else {
-			$rightnames= array();
+        } else {
+            $rightnames= array();
             foreach (Right::getAllRegisteredRights(true) as $v)
             {
                 $rightnames[] = "\"" . htmlentities($v) . "\"";
-            }  
+            }
             $this->mSmarty->assign( "jsrightslist", "[" . implode(",", $rightnames ) . "]" );
             
             $menugroups= array();
             foreach (MenuGroup::getArray() as $v)
             {
                 $menugroups[] = "\"" . htmlentities($v->getSlug()) . "\"";
-            }  
+            }
             $this->mSmarty->assign( "jsmenugrouplist", "[" . implode(",", $menugroups ) . "]" );
-		
-            $rev = Revision::getById( $g->getRevision() );
+
+            if( isset( $data[2] ) ) {
+                $rev = Revision::getById( $data[2] );
+            } else {
+                $rev = Revision::getById( $g->getRevision() );
+            }
+
             $content = "";
             if( $rev != null ) {
                 $content = $rev->getText();
@@ -121,21 +130,22 @@ class PageManagePages extends PageBase
             
             $history = $g->getHistory();
             
-			$this->mBasePage = "cms/create.tpl";
-			$this->mSmarty->assign( "cmspagetitle", $g->getTitle() );
-			$this->mSmarty->assign( "slug", $g->getSlug() );
-			$this->mSmarty->assign( "accessright", $g->getAccessRight() );
+            $this->mBasePage = "cms/create.tpl";
+            $this->mSmarty->assign( "cmspagetitle", $g->getTitle() );
+            $this->mSmarty->assign( "slug", $g->getSlug() );
+            $this->mSmarty->assign( "accessright", $g->getAccessRight() );
             $this->mSmarty->assign( "pagecontent", $content );
             $this->mSmarty->assign( "history", $history );
+            $this->mSmarty->assign( "pageid", $g->getId() );
             $loadingMenuGroup = MenuGroup::getById( $g->getMenuGroup() );
             if($loadingMenuGroup != null) {
                 $this->mSmarty->assign( "menugroup", $loadingMenuGroup->getSlug() );
             } else {
                 $this->mSmarty->assign( "menugroup", "" );
             }
-		}
-	}
-	
+        }
+    }
+
 	private function deleteMode( $data ) {
 		self::checkAccess( "cms-delete" );
 	
@@ -208,4 +218,26 @@ class PageManagePages extends PageBase
             $this->mSmarty->assign( "menugroup", "main");
 		}
 	}
+
+    private function viewMode( $data ) {
+        $rev = Revision::getById( $data[ 1 ] );
+
+        if( $rev === false ) {
+            throw new NonexistantObjectException();
+        }
+
+        $pageid = $rev->getPage();
+
+        $page = Page::getById( $pageid );
+
+        if( $page === false ) {
+            $title = "Orphan Revision Text";
+        } else {
+            $title = $page->getTitle();
+        }
+
+        $this->mSmarty->assign( "cmsPageContent", $rev->getText() );
+        $this->mSmarty->assign( "cmsPageHeader", $title );
+        $this->mBasePage = "cms/cmspage.tpl";
+    }
 }

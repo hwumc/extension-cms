@@ -76,11 +76,17 @@
     </div>
     <div id="collapseOne" class="accordion-body collapse">
       <div class="accordion-inner">
-        <ul>
+		<table class="table table-bordered table-striped">
 			{foreach from="$history" item="rev"}
-				<li><strong>Revision {$rev.id}</strong> @ {$rev.timestamp} by {$rev.username|escape}</li>
+			<tr>
+				<td>{$rev.timestamp}</td>
+				<td>{$rev.username|escape}</td>
+				<td>{if $rev.active == 1}<span class="label">Current</span>{/if}</td>
+				<td><a class="btn" href="{$cScriptPath}/{$pageslug}/view/{$rev.id}">View</a></td>
+				<td><a class="btn" href="{$cScriptPath}/{$pageslug}/edit/{$pageid}/{$rev.id}">Edit</a></td>
+			</tr>
 			{/foreach}
-		</ul>
+		</table>
       </div>
     </div>
   </div>

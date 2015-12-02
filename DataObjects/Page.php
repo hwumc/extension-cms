@@ -183,7 +183,8 @@ class Page extends DataObject
 	r.timestamp, 
 	r.text, 
 	r.page, 
-	p.title 
+	p.title,
+	case when p.revision = r.id then 1 else 0 end as active
 FROM revision r
 	LEFT JOIN `page` p ON p.id = r.page
 	LEFT JOIN `user` u ON u.id = r.user
