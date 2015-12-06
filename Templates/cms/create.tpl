@@ -53,28 +53,4 @@
 	</div>
 </form>
 
-<div class="accordion" id="accordion">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
-        {message name="{$pageslug}-create-header-history"}
-      </a>
-    </div>
-    <div id="collapseOne" class="accordion-body collapse">
-      <div class="accordion-inner">
-		<table class="table table-bordered table-striped">
-			{foreach from="$history" item="rev"}
-			<tr>
-				<td>{$rev.timestamp}</td>
-				<td>{$rev.username|escape}</td>
-				<td>{if $rev.active == 1}<span class="label">Current</span>{/if}</td>
-				<td><a class="btn" href="{$cScriptPath}/{$pageslug}/view/{$rev.id}">View</a></td>
-				<td><a class="btn" href="{$cScriptPath}/{$pageslug}/edit/{$pageid}/{$rev.id}">Edit</a></td>
-			</tr>
-			{/foreach}
-		</table>
-      </div>
-    </div>
-  </div>
-</div>
 {/block}

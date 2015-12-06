@@ -194,7 +194,14 @@ WHERE r.page = :pageid
 		$statement->execute();
 
 		$result = $statement->fetchAll( PDO::FETCH_ASSOC );
+        
+        $augmented = array();
+        foreach($result as $data) {
+            $userobject = User::getById($data['userid']);
+            $data['userobject'] = $userobject;
+            $augmented[] = $data;
+        }
 
-		return $result;   
+		return $augmented;
     }
 }

@@ -33,6 +33,10 @@ class PageManagePages extends PageBase
 				case "view":
 					$this->viewMode( $data );
 					return;
+				
+				case "history":
+					$this->historyMode( $data );
+					return;
 
 			}
 	
@@ -131,14 +135,11 @@ class PageManagePages extends PageBase
                 $content = $rev->getText();
             }
             
-            $history = $g->getHistory();
-            
             $this->mBasePage = "cms/create.tpl";
             $this->mSmarty->assign( "cmspagetitle", $g->getTitle() );
             $this->mSmarty->assign( "slug", $g->getSlug() );
             $this->mSmarty->assign( "accessright", $g->getAccessRight() );
             $this->mSmarty->assign( "pagecontent", $content );
-            $this->mSmarty->assign( "history", $history );
             $this->mSmarty->assign( "pageid", $g->getId() );
             $loadingMenuGroup = MenuGroup::getById( $g->getMenuGroup() );
             if($loadingMenuGroup != null) {
@@ -147,6 +148,25 @@ class PageManagePages extends PageBase
                 $this->mSmarty->assign( "menugroup", "" );
             }
         }
+    }
+
+    private function historyMode( $data ) {
+        $allowEdit = "false";
+		try {
+			self::checkAccess('cms-edit');
+			$allowEdit = "true";
+		}
+        catch(AccessDeniedException $ex) { 
+            $allowEdit = "false";
+		}
+        
+		$g = Page::getById( $data[ 1 ] );
+
+        $history = $g->getHistory();
+        $this->mSmarty->assign( "history", $history );
+        $this->mSmarty->assign( "allowEdit", $allowEdit );
+        $this->mSmarty->assign( "page", $g );
+        $this->mBasePage = "cms/history.tpl";
     }
 
 	private function deleteMode( $data ) {

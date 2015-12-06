@@ -43,6 +43,7 @@
     <Compile Include="Page\PageManagePages.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Templates\cms\history.tpl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataObjects" />
