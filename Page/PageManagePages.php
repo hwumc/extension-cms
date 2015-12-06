@@ -117,7 +117,7 @@ class PageManagePages extends PageBase
             }
             $this->mSmarty->assign( "jsmenugrouplist", "[" . implode(",", $menugroups ) . "]" );
             
-            $allfiles = File::getArray();
+            $allfiles = File::getImages();
             $this->mSmarty->assign("allfiles", $allfiles);
 
             if( isset( $data[2] ) ) {
@@ -211,7 +211,7 @@ class PageManagePages extends PageBase
             }  
             $this->mSmarty->assign( "jsmenugrouplist", "[" . implode(",", $menugroups ) . "]" );
 		
-            $allfiles = File::getArray();
+            $allfiles = File::getImages();
             $this->mSmarty->assign("allfiles", $allfiles);
 
 			$this->mBasePage = "cms/create.tpl";
