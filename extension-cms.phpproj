@@ -52,7 +52,6 @@
     <Folder Include="Templates\cms" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Templates\mainpage.tpl" />
     <Content Include="Templates\cms\cmspage.tpl">
       <SubType>Content</SubType>
     </Content>
