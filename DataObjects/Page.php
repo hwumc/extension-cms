@@ -20,7 +20,7 @@ class Page extends DataObject
      */
     public static function getBySlug( $slug ) {
         global $gDatabase;
-        $statement = $gDatabase->prepare("SELECT * FROM `Page` WHERE slug = :slug;");
+        $statement = $gDatabase->prepare("SELECT * FROM `page` WHERE slug = :slug;");
         $statement->bindParam(":slug", $slug);
 
         $statement->execute();
