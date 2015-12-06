@@ -10,6 +10,30 @@ class Page extends DataObject
     protected $revision;
     protected $parent;
     protected $menugroup;
+    protected $template;
+    protected $imagegroup;
+
+    /**
+     * Summary of getBySlug
+     * @param string $slug 
+     * @return Page
+     */
+    public static function getBySlug( $slug ) {
+        global $gDatabase;
+        $statement = $gDatabase->prepare("SELECT * FROM `Page` WHERE slug = :slug;");
+        $statement->bindParam(":slug", $slug);
+
+        $statement->execute();
+
+        $resultObject = $statement->fetchObject( "Page" );
+
+        if($resultObject != false)
+        {
+            $resultObject->isNew = false;
+        }
+
+        return $resultObject;
+    }
     
     public function getSlug()
     {
@@ -59,6 +83,39 @@ class Page extends DataObject
     public function setParent($parent)
     {
         $this->parent = $parent;   
+    }
+    
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    public function getTemplateForDisplay()
+    {
+        global $cCmsDefaultTemplate;
+
+        if($this->template === ""
+            || $this->template === null
+            || $this->template === false) {
+            return $cCmsDefaultTemplate;
+        }
+
+        return $this->template;
+    }
+    
+    public function setTemplate($template)
+    {
+        $this->template = $template;   
+    }
+    
+    public function getImageGroup()
+    {
+        return $this->imagegroup;
+    }
+    
+    public function setImageGroup($imageGroup)
+    {
+        $this->imagegroup = $imageGroup;   
     }
     
     public function getMenuGroup()
@@ -132,17 +189,17 @@ class Page extends DataObject
     {
         global $gDatabase;
 
-        $godmodevalue = 0;
-
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO page (slug, title, accessright, revision, parent, menugroup) VALUES (:slug, :title, :accessright, :revision, :parent, :menugroup );");
+            $statement = $gDatabase->prepare("INSERT INTO page (slug, title, accessright, revision, parent, menugroup, template, imagegroup) VALUES (:slug, :title, :accessright, :revision, :parent, :menugroup, :template, :imagegroup );");
             $statement->bindParam(":slug", $this->slug);
             $statement->bindParam(":title", $this->title);
             $statement->bindParam(":accessright", $this->accessright);
             $statement->bindParam(":revision", $this->revision);
             $statement->bindParam(":parent", $this->parent);
             $statement->bindParam(":menugroup", $this->menugroup);
+            $statement->bindParam(":template", $this->template);
+            $statement->bindParam(":imagegroup", $this->imagegroup);
 
             if($statement->execute())
             {
@@ -156,13 +213,15 @@ class Page extends DataObject
         }
         else
         { // update
-            $statement = $gDatabase->prepare("UPDATE page SET slug = :slug, title = :title, accessright = :accessright, revision = :revision, parent = :parent, menugroup = :menugroup WHERE id = :id LIMIT 1;");
+            $statement = $gDatabase->prepare("UPDATE page SET slug = :slug, title = :title, accessright = :accessright, revision = :revision, parent = :parent, menugroup = :menugroup, template = :template, imagegroup = :imagegroup WHERE id = :id LIMIT 1;");
             $statement->bindParam(":slug", $this->slug);
             $statement->bindParam(":title", $this->title);
             $statement->bindParam(":accessright", $this->accessright);
             $statement->bindParam(":revision", $this->revision);
             $statement->bindParam(":parent", $this->parent);
             $statement->bindParam(":menugroup", $this->menugroup);
+            $statement->bindParam(":template", $this->template);
+            $statement->bindParam(":imagegroup", $this->imagegroup);
 
             $statement->bindParam(":id", $this->id);
 

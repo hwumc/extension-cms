@@ -52,6 +52,7 @@
     <Folder Include="Templates\cms" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Templates\mainpage.tpl" />
     <Content Include="Templates\cms\cmspage.tpl">
       <SubType>Content</SubType>
     </Content>
@@ -64,6 +65,7 @@
     <Content Include="Templates\cms\list.tpl">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Templates\newmainpage.tpl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\siteframework\siteframework.phpproj">

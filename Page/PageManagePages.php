@@ -75,6 +75,8 @@ class PageManagePages extends PageBase
 		} catch(AccessDeniedException $ex) { 
             $allowEdit = "false";
 		}
+
+        global $cCmsTemplates;
         
 		$g = Page::getById( $data[ 1 ] );
 
@@ -83,6 +85,11 @@ class PageManagePages extends PageBase
 		if( WebRequest::wasPosted() ) {
 			if( ! $allowEdit ) throw new AccessDeniedException();
 			
+            $template = WebRequest::post("template");
+            if($template == "" || array_key_exists($template, $cCmsTemplates)) {
+                $g->setTemplate($template);
+            }
+
             $g->setTitle ( WebRequest::post( "cmspagetitle" ) );
 			$g->setSlug( WebRequest::post( "slug" ) );
 			$g->setAccessRight( WebRequest::post( "accessright" ) );
@@ -136,11 +143,16 @@ class PageManagePages extends PageBase
             }
             
             $this->mBasePage = "cms/create.tpl";
+
+			$this->mSmarty->assign( "imagegroups", array() );
+			$this->mSmarty->assign( "templates", $cCmsTemplates );
             $this->mSmarty->assign( "cmspagetitle", $g->getTitle() );
             $this->mSmarty->assign( "slug", $g->getSlug() );
             $this->mSmarty->assign( "accessright", $g->getAccessRight() );
             $this->mSmarty->assign( "pagecontent", $content );
             $this->mSmarty->assign( "pageid", $g->getId() );
+            $this->mSmarty->assign( "template", $g->getTemplate() );
+            $this->mSmarty->assign( "imagegroup", $g->getImageGroup() );
             $loadingMenuGroup = MenuGroup::getById( $g->getMenuGroup() );
             if($loadingMenuGroup != null) {
                 $this->mSmarty->assign( "menugroup", $loadingMenuGroup->getSlug() );
@@ -192,9 +204,17 @@ class PageManagePages extends PageBase
 	private function createMode( $data ) {
 		self::checkAccess( "cms-create" );
 		$this->mSmarty->assign("allowEdit", 'true');
+
+        global $cCmsTemplates;
 	
 		if( WebRequest::wasPosted() ) {
 			$g = new Page();
+            
+            $template = WebRequest::post("template");
+            if($template == "" || array_key_exists($cCmsTemplates, $template)) {
+                $g->setTemplate($template);
+            }
+
 			$g->setTitle( WebRequest::post( "cmspagetitle" ) );
 			$g->setSlug( WebRequest::post( "slug" ) );
             $g->setAccessRight( WebRequest::post( "accessright" ) );
@@ -235,13 +255,17 @@ class PageManagePages extends PageBase
             $this->mSmarty->assign("allfiles", $allfiles);
 
 			$this->mBasePage = "cms/create.tpl";
-            $history = array();
-            $this->mSmarty->assign( "history", $history );
+
+            
+			$this->mSmarty->assign( "imagegroups", array() );
+			$this->mSmarty->assign( "templates", $cCmsTemplates );
 			$this->mSmarty->assign( "cmspagetitle", "" );
 			$this->mSmarty->assign( "slug", "" );
             $this->mSmarty->assign( "accessright", "public" );
             $this->mSmarty->assign( "pagecontent", "");
             $this->mSmarty->assign( "menugroup", "main");
+            $this->mSmarty->assign( "template", "" );
+            $this->mSmarty->assign( "imagegroup", "" );
 		}
 	}
 
@@ -264,6 +288,6 @@ class PageManagePages extends PageBase
 
         $this->mSmarty->assign( "cmsPageContent", $rev->getText() );
         $this->mSmarty->assign( "cmsPageHeader", $title );
-        $this->mBasePage = "cms/cmspage.tpl";
+        $this->mBasePage = $page->getTemplateForDisplay();
     }
 }

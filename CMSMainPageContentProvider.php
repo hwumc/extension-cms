@@ -5,15 +5,9 @@ if(!defined("HMS")) die("Invalid entry point");
 class CMSMainPageContentProvider implements MainPageContentProvider
 {
 	public function getContent($smarty) {
-        $cmsPage = null;
-        foreach(Page::getArray() as $p) {
-            if($p->getSlug() == "main")
-            {
-                $cmsPage = $p;
-            }
-        }
-        
-        if($cmsPage != null) {
+        $cmsPage = Page::getBySlug("main");
+
+        if($cmsPage != false) {
             $smarty->assign( "cmsPageContent", Revision::getById( $cmsPage->getRevision() )->getText() );
             $smarty->assign( "cmsPageHeader", $cmsPage->getTitle() );
             return "CMS Content.";
@@ -28,6 +22,11 @@ class CMSMainPageContentProvider implements MainPageContentProvider
     }
     
     public function getPageTemplate() {
+        $cmsPage = Page::getBySlug("main");
+        if($cmsPage != false) {
+            return $cmsPage->getTemplateForDisplay();
+        }
+
         return "cms/cmspage.tpl";
     }
 }
