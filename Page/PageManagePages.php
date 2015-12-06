@@ -112,6 +112,9 @@ class PageManagePages extends PageBase
                 $menugroups[] = "\"" . htmlentities($v->getSlug()) . "\"";
             }  
             $this->mSmarty->assign( "jsmenugrouplist", "[" . implode(",", $menugroups ) . "]" );
+            
+            $allfiles = File::getArray();
+            $this->mSmarty->assign("allfiles", $allfiles);
 		
             $rev = Revision::getById( $g->getRevision() );
             $content = "";
@@ -198,6 +201,9 @@ class PageManagePages extends PageBase
             }  
             $this->mSmarty->assign( "jsmenugrouplist", "[" . implode(",", $menugroups ) . "]" );
 		
+            $allfiles = File::getArray();
+            $this->mSmarty->assign("allfiles", $allfiles);
+
 			$this->mBasePage = "cms/create.tpl";
             $history = array();
             $this->mSmarty->assign( "history", $history );
