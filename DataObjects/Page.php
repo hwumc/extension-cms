@@ -108,6 +108,10 @@ class Page extends DataObject
         $this->template = $template;   
     }
     
+    /**
+     * Summary of getImageGroup
+     * @return int
+     */
     public function getImageGroup()
     {
         return $this->imagegroup;

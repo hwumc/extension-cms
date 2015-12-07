@@ -308,6 +308,13 @@ class PageManagePages extends PageBase
             $title = $page->getTitle();
         }
 
+        $imageGroup = ImageGroup::getById($page->getImageGroup());
+        $files = array();
+        if($imageGroup !== false) {
+            $files = $imageGroup->getFiles();
+        }
+
+        $this->mSmarty->assign( "cmsImageGroupFiles", $files );
         $this->mSmarty->assign( "cmsPageContent", $rev->getText() );
         $this->mSmarty->assign( "cmsPageHeader", $title );
         $this->mBasePage = $page->getTemplateForDisplay();

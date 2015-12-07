@@ -8,16 +8,21 @@ class CMSMainPageContentProvider implements MainPageContentProvider
         $cmsPage = Page::getBySlug("main");
 
         if($cmsPage != false) {
+            $imageGroup = ImageGroup::getById($cmsPage->getImageGroup());
+            $files = array();
+            if($imageGroup !== false) {
+                $files = $imageGroup->getFiles();
+            }
+
+            $this->mSmarty->assign( "cmsImageGroupFiles", $files );
             $smarty->assign( "cmsPageContent", Revision::getById( $cmsPage->getRevision() )->getText() );
             $smarty->assign( "cmsPageHeader", $cmsPage->getTitle() );
-            return "CMS Content.";
         } else {
             $content = "<div class=\"alert alert-error\"><strong>Error</strong> Cannot find content page with slug 'main'. Is this page defined?</div>";
             $header = "Home";
+            $smarty->assign( "cmsImageGroupFiles", array() );
             $smarty->assign( "cmsPageContent", $content);
             $smarty->assign( "cmsPageHeader", $header);
-            
-            return "CMS Content.";
         }
     }
     
