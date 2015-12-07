@@ -90,8 +90,10 @@
         </div>
         {/foreach}
     </div>
-    <a class="left carousel-control" href="#imageCarousel" data-slide="prev">&lsaquo;</a>
-    <a class="right carousel-control" href="#imageCarousel" data-slide="next">&rsaquo;</a>
+    {if count($cmsImageGroupFiles) > 1}
+        <a class="left carousel-control" href="#imageCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="right carousel-control" href="#imageCarousel" data-slide="next">&rsaquo;</a>
+    {/if}
 </div><!-- /.carousel -->
 {/block}
 
