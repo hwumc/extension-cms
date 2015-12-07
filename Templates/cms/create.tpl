@@ -59,8 +59,8 @@
                 <div class="controls">
                     <select name="imagegroup" id="imagegroup" {if $allowEdit =="false" }disabled="true" {/if} >
                         <option value="" {if $imagegroup == ""}selected="selected"{/if}>None</option>
-                        {foreach from=$imagegroup key="key" item="display"}
-                            <option value="{$key}" {if $imagegroup == $key}selected="selected"{/if}>{$display|escape}</option>
+                        {foreach from=$imagegroups key="key" item="display"}
+                            <option value="{$key}" {if $imagegroup == $key}selected="selected"{/if}>{$display->getName()|escape}</option>
                         {/foreach}
                     </select>
                     <span class="help-block">{message name="{$pageslug}-create-imagegroup-help"}</span>

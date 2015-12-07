@@ -90,6 +90,15 @@ class PageManagePages extends PageBase
                 $g->setTemplate($template);
             }
 
+            $imagegroup = WebRequest::post("imagegroup");
+            if($imagegroup == "") {
+                $g->setImageGroup(null);
+            }
+
+            if(is_int($imagegroup) || ImageGroup::getById($imagegroup) !== false) {
+                $g->setImageGroup($imagegroup);
+            }
+
             $g->setTitle ( WebRequest::post( "cmspagetitle" ) );
 			$g->setSlug( WebRequest::post( "slug" ) );
 			$g->setAccessRight( WebRequest::post( "accessright" ) );
@@ -131,6 +140,8 @@ class PageManagePages extends PageBase
             $allfiles = File::getImages();
             $this->mSmarty->assign("allfiles", $allfiles);
 
+            $imageGroups = ImageGroup::getArray();
+
             if( isset( $data[2] ) ) {
                 $rev = Revision::getById( $data[2] );
             } else {
@@ -144,8 +155,8 @@ class PageManagePages extends PageBase
             
             $this->mBasePage = "cms/create.tpl";
 
-			$this->mSmarty->assign( "imagegroups", array() );
-			$this->mSmarty->assign( "templates", $cCmsTemplates );
+            $this->mSmarty->assign( "imagegroups", $imageGroups );
+            $this->mSmarty->assign( "templates", $cCmsTemplates );
             $this->mSmarty->assign( "cmspagetitle", $g->getTitle() );
             $this->mSmarty->assign( "slug", $g->getSlug() );
             $this->mSmarty->assign( "accessright", $g->getAccessRight() );
@@ -215,6 +226,15 @@ class PageManagePages extends PageBase
                 $g->setTemplate($template);
             }
 
+            $imagegroup = WebRequest::post("imagegroup");
+            if($imagegroup == "") {
+                $g->setImageGroup(null);
+            }
+
+            if(is_int($imagegroup) || ImageGroup::getById($imagegroup) !== false) {
+                $g->setImageGroup($imagegroup);
+            }
+
 			$g->setTitle( WebRequest::post( "cmspagetitle" ) );
 			$g->setSlug( WebRequest::post( "slug" ) );
             $g->setAccessRight( WebRequest::post( "accessright" ) );
@@ -236,8 +256,8 @@ class PageManagePages extends PageBase
 			global $cScriptPath;
 			$this->mHeaders[] =  "Location: " . $cScriptPath . "/ManagePages";
             $this->mIsRedirecting = true;
-		} else {
-			$rightnames= array();
+        } else {
+            $rightnames= array();
             foreach (Right::getAllRegisteredRights(true) as $v)
             {
                 $rightnames[] = "\"" . $v . "\"";
@@ -250,17 +270,19 @@ class PageManagePages extends PageBase
                 $menugroups[] = "\"" . $v->getSlug() . "\"";
             }  
             $this->mSmarty->assign( "jsmenugrouplist", "[" . implode(",", $menugroups ) . "]" );
-		
+
             $allfiles = File::getImages();
             $this->mSmarty->assign("allfiles", $allfiles);
 
-			$this->mBasePage = "cms/create.tpl";
+            $imageGroups = ImageGroup::getArray();
+
+            $this->mBasePage = "cms/create.tpl";
 
             
-			$this->mSmarty->assign( "imagegroups", array() );
-			$this->mSmarty->assign( "templates", $cCmsTemplates );
-			$this->mSmarty->assign( "cmspagetitle", "" );
-			$this->mSmarty->assign( "slug", "" );
+            $this->mSmarty->assign( "imagegroups", $imageGroups );
+            $this->mSmarty->assign( "templates", $cCmsTemplates );
+            $this->mSmarty->assign( "cmspagetitle", "" );
+            $this->mSmarty->assign( "slug", "" );
             $this->mSmarty->assign( "accessright", "public" );
             $this->mSmarty->assign( "pagecontent", "");
             $this->mSmarty->assign( "menugroup", "main");
