@@ -14,7 +14,7 @@ class CMSMainPageContentProvider implements MainPageContentProvider
                 $files = $imageGroup->getFiles();
             }
 
-            $this->mSmarty->assign( "cmsImageGroupFiles", $files );
+            $smarty->assign( "cmsImageGroupFiles", $files );
             $smarty->assign( "cmsPageContent", Revision::getById( $cmsPage->getRevision() )->getText() );
             $smarty->assign( "cmsPageHeader", $cmsPage->getTitle() );
         } else {
