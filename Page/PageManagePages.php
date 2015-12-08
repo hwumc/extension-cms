@@ -99,8 +99,15 @@ class PageManagePages extends PageBase
                 $g->setImageGroup($imagegroup);
             }
 
+            $otherSlugPage = Page::getBySlug(WebRequest::post("slug"));
+            if($otherSlugPage !== false && $otherSlugPage->getId() != $g->getId()) {
+                Session::appendWarning("slug-already-exists");
+            }
+            else{
+                $g->setSlug( WebRequest::post( "slug" ) );
+            }
+
             $g->setTitle ( WebRequest::post( "cmspagetitle" ) );
-			$g->setSlug( WebRequest::post( "slug" ) );
 			$g->setAccessRight( WebRequest::post( "accessright" ) );
             $menugroup = MenuGroup::getBySlug( WebRequest::post( "menugroup" ) );
             if( $menugroup != null ) {
@@ -235,8 +242,16 @@ class PageManagePages extends PageBase
                 $g->setImageGroup($imagegroup);
             }
 
+            $otherSlugPage = Page::getBySlug(WebRequest::post("slug"));
+            if($otherSlugPage !== false) {
+                Session::appendWarning("slug-already-exists-set-random");
+                $g->setSlug( base64_encode(openssl_random_pseudo_bytes(9)) );
+            }
+            else{
+                $g->setSlug( WebRequest::post( "slug" ) );
+            }
+
 			$g->setTitle( WebRequest::post( "cmspagetitle" ) );
-			$g->setSlug( WebRequest::post( "slug" ) );
             $g->setAccessRight( WebRequest::post( "accessright" ) );
             $menugroup = MenuGroup::getBySlug( WebRequest::post( "menugroup" ) );
             if( $menugroup != null ) {
