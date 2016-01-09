@@ -101,7 +101,7 @@
 	{foreach from="$mainmenu" item="menuitem" name="mainmenuloop"}
 	{if $menuitem.issecondary != 1}
     <li class="dropdown">
-        <a href="{if isset($menuitem.link)}{$menuitem.link}{else}#{/if}" {if !isset($menuitem.link)}class="dropdown-toggle" data-toggle="dropdown"{/if}>{$menuitem.displayname|escape}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}{if !isset($menuitem.link)}&nbsp;<b class="caret"></b>{/if}</a>
+        <a href="{if isset($menuitem.link)}{$cScriptPath}{$menuitem.link}{else}#{/if}" {if !isset($menuitem.link)}class="dropdown-toggle" data-toggle="dropdown"{/if}>{$menuitem.displayname|escape}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}{if !isset($menuitem.link)}&nbsp;<b class="caret"></b>{/if}</a>
 		{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
 		<ul class="dropdown-menu">
 			{foreach from="$submenu" item="subitem" }
