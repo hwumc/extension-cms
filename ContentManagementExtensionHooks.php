@@ -48,7 +48,9 @@ class ContentManagementExtensionHooks
                 $menu[ strtolower($group->getSlug()) ] = array(
                     "items" => array(),
                     "title" => strtolower($group->getSlug()),
-                    "displayname" => $group->getDisplayName()
+                    "displayname" => $group->getDisplayName(),
+					"issecondary" => $group->getIsSecondary(),
+					"priorty" => $group->getPriority()
                 );
 			}
 		}
@@ -63,18 +65,29 @@ class ContentManagementExtensionHooks
                 continue;   
             }
             
-            $menugroup = $page->getMenuGroupObject();
-            $slug = "main";
-            if($menugroup != null)
-            {
-                $slug = $menugroup->getSlug();
-                
-                $menu[ strtolower($slug) ][ "items" ][ $page->getSlug() ] = array(
-                    "displayname" => $page->getTitle(),
-                    "link" => "/" . $page->getSlug(),
-                    "title" => $page->getSlug()
-                );
-            }
+			if($page->getPromoted() == 1) {
+				$menu[ $page->getSlug() ] = array(
+					"displayname" => $page->getTitle(),
+					"link" => "/" . $page->getSlug(),
+					"title" => $page->getSlug(),
+					"issecondary" => 0,
+					"priority" => $page->getPriority()
+				);
+			}
+			else {
+				$menugroup = $page->getMenuGroupObject();
+				$slug = "main";
+				if($menugroup != null)
+				{
+					$slug = $menugroup->getSlug();
+					
+					$menu[ strtolower($slug) ][ "items" ][ $page->getSlug() ] = array(
+						"displayname" => $page->getTitle(),
+						"link" => "/" . $page->getSlug(),
+						"title" => $page->getSlug()
+					);
+				}
+			}
         }
         
         return $menu;

@@ -109,6 +109,9 @@ class PageManagePages extends PageBase
 
             $g->setTitle ( WebRequest::post( "cmspagetitle" ) );
 			$g->setAccessRight( WebRequest::post( "accessright" ) );
+			$g->setPriority( WebRequest::post( "priority" ) );
+			$g->setPromoted( WebRequest::post( "promoted" ) == 'on' ? 1 : 0  );
+
             $menugroup = MenuGroup::getBySlug( WebRequest::post( "menugroup" ) );
             if( $menugroup != null ) {
 		        $g->setMenuGroup( $menugroup->getId() );
@@ -171,6 +174,9 @@ class PageManagePages extends PageBase
             $this->mSmarty->assign( "pageid", $g->getId() );
             $this->mSmarty->assign( "template", $g->getTemplate() );
             $this->mSmarty->assign( "imagegroup", $g->getImageGroup() );
+            $this->mSmarty->assign( "promoted", $g->getPromoted() == 1 ? 'checked="checked"' : '' );
+            $this->mSmarty->assign( "priority", $g->getPriority() );
+
             $loadingMenuGroup = MenuGroup::getById( $g->getMenuGroup() );
             if($loadingMenuGroup != null) {
                 $this->mSmarty->assign( "menugroup", $loadingMenuGroup->getSlug() );
@@ -253,6 +259,10 @@ class PageManagePages extends PageBase
 
 			$g->setTitle( WebRequest::post( "cmspagetitle" ) );
             $g->setAccessRight( WebRequest::post( "accessright" ) );
+
+			$g->setPriority( WebRequest::post( "priority" ) );
+			$g->setPromoted( WebRequest::post( "promoted" ) == 'on' ? 1 : 0  );
+
             $menugroup = MenuGroup::getBySlug( WebRequest::post( "menugroup" ) );
             if( $menugroup != null ) {
 		        $g->setMenuGroup( $menugroup->getId() );
@@ -303,6 +313,8 @@ class PageManagePages extends PageBase
             $this->mSmarty->assign( "menugroup", "main");
             $this->mSmarty->assign( "template", "" );
             $this->mSmarty->assign( "imagegroup", "" );
+            $this->mSmarty->assign( "promoted", "0" );
+            $this->mSmarty->assign( "priority", "10" );
 		}
 	}
 

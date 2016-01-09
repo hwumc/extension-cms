@@ -67,6 +67,22 @@
                 </div>
             </div>
 
+			<div class="control-group">
+				<div class="controls">
+					<label for="promoted" class="promoted">
+						<input type="checkbox" id="promoted" name="promoted" {$promoted} {if $allowEdit == "false" }disabled="true" {/if}/> {message name="{$pageslug}-create-promoted"}
+					</label>
+				</div>
+			</div>	
+
+			<div class="control-group">
+				<label class="control-label" for="priority">{message name="{$pageslug}-create-priority"}</label>
+				<div class="controls">
+					<input type="text" class="input-small" id="priority" name="priority" placeholder="{message name="{$pageslug}-create-priority-placeholder"}" value="{$priority}" {if $allowEdit == "false" }disabled="true" {/if} />
+					<span class="help-block">{message name="{$pageslug}-create-priority-help"}</span>
+				</div>
+			</div>
+
         </div>
     </div>
 

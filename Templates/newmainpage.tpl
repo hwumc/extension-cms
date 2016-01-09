@@ -44,37 +44,83 @@
 </div><!-- /.navbar-wrapper -->
 {/block}
 
+{block name="navbarsecondaryitems"}{/block}
+
+{block name="personalnav"}
+{foreach from=$navbarsecondaryitems item="menu" key="menuheader"}
+	<li class="dropdown-submenu">
+		<a href="#" tabindex="-1"><i class="icon-folder-open"></i>&nbsp;{message name="navbar-{$menuheader}"}</a>
+		<ul class="dropdown-menu">
+			{foreach from=$menu item="section" key="sectionheader" name="dropdownsection"}
+			<li class="nav-header">{message name="navbarmenu-{$sectionheader}"}</li>
+			{foreach from=$section item="menuitem"}
+			<li><a href="{$menuitem.link}"><i class="{$menuitem.icon}"></i>&nbsp;{message name="{$menuitem.displayname}"}</a></li>
+			{/foreach}
+			{if !$smarty.foreach.dropdownsection.last}
+			<li class="divider"></li>
+			{/if}
+			{/foreach}
+		</ul>
+	</li>
+{/foreach}
+{if count($navbarsecondaryitems) > 0}
+<li class="divider"></li>
+{/if}
+{foreach from="$mainmenu" item="menuitem" name="mainmenuloop"}
+	{if $menuitem.issecondary == 1}
+		{assign menusepneeded true}
+		<li class="dropdown-submenu">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-folder-open"></i>&nbsp;{$menuitem.displayname|escape}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</a>
+			{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
+			<ul class="dropdown-menu">
+				{foreach from="$submenu" item="subitem" }
+				<li>
+					<a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active" {/if}>
+					{if isset($subitem.displayname)}
+					{$subitem.displayname|escape}
+					{else}
+					{message name={$subitem.title}}
+					{/if}
+					{if isset($subitem.data)}{$subitem.data|escape}{/if}
+					</a>
+				</li>
+				{/foreach}
+			</ul>
+			{/if}
+		</li>
+	{/if}
+{/foreach}
+{if $menusepneeded}
+<li class="divider"></li>
+{/if}
+{/block}
+
 {block name="primarynavbar" prepend}
+<!--{print_r($mainmenu)}-->
 <ul class="nav">
+	{foreach from="$mainmenu" item="menuitem" name="mainmenuloop"}
+	{if $menuitem.issecondary != 1}
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{message name="navbar-primarynavigation"}&nbsp;<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-            {foreach from="$mainmenu" item="menuitem" name="mainmenuloop"}
-            {if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
-            <li class="nav-header">{$menuitem.displayname|escape}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</li>
-            {foreach from="$submenu" item="subitem" }
-            <li>
-                <a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active" {/if}>
-                {if isset($subitem.displayname)}
-                {$subitem.displayname|escape}
-                {else}
-                {message name={$subitem.title}}
-                {/if}
-                {if isset($subitem.data)}{$subitem.data|escape}{/if}
-                </a>
-            </li>
-            {/foreach}
-            {if ! $smarty.foreach.mainmenuloop.last}
-            <li class="divider"></li>
-            {/if}
-            {else}
-            <li>
-                <a href="{$cScriptPath}{$menuitem.link}" {if isset($menuitem.current)}class="active" {/if}>{message name={$menuitem.title}}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}</a>
-                {/if}
-            </li>
-            {/foreach}
-        </ul>
+        <a href="{if isset($menuitem.link)}{$menuitem.link}{else}#{/if}" {if !isset($menuitem.link)}class="dropdown-toggle" data-toggle="dropdown"{/if}>{$menuitem.displayname|escape}{if isset($menuitem.data)}{$menuitem.data|escape}{/if}{if !isset($menuitem.link)}&nbsp;<b class="caret"></b>{/if}</a>
+		{if isset($menuitem.items)}{assign "submenu" "{$menuitem.items}"}
+		<ul class="dropdown-menu">
+			{foreach from="$submenu" item="subitem" }
+			<li>
+				<a href="{$cScriptPath}{$subitem.link}" {if isset($subitem.current)}class="active" {/if}>
+				{if isset($subitem.displayname)}
+				{$subitem.displayname|escape}
+				{else}
+				{message name={$subitem.title}}
+				{/if}
+				{if isset($subitem.data)}{$subitem.data|escape}{/if}
+				</a>
+			</li>
+			{/foreach}
+		</ul>
+		{/if}
     </li>
+	{/if}	
+	{/foreach}
 </ul>
 
 {/block}

@@ -12,6 +12,8 @@ class Page extends DataObject
     protected $menugroup;
     protected $template;
     protected $imagegroup;
+	protected $promoted;
+	protected $priority;
 
     /**
      * Summary of getBySlug
@@ -150,6 +152,22 @@ class Page extends DataObject
         $this->menugroup = $menugroup;   
     }
     
+	public function getPromoted() {
+		return $this->promoted;
+	}
+
+	public function setPromoted($promoted) {
+		$this->promoted = $promoted;
+	}
+
+	public function getPriority() {
+		return $this->priority;
+	}
+
+	public function setPriority($priority) {
+		$this->priority = $priority;
+	}
+
     public function canDelete()
     {
         return true;   
@@ -195,7 +213,7 @@ class Page extends DataObject
 
         if($this->isNew)
         { // insert
-            $statement = $gDatabase->prepare("INSERT INTO page (slug, title, accessright, revision, parent, menugroup, template, imagegroup) VALUES (:slug, :title, :accessright, :revision, :parent, :menugroup, :template, :imagegroup );");
+            $statement = $gDatabase->prepare("INSERT INTO page (slug, title, accessright, revision, parent, menugroup, template, imagegroup, promoted, priority) VALUES (:slug, :title, :accessright, :revision, :parent, :menugroup, :template, :imagegroup, :promoted, :priority );");
             $statement->bindParam(":slug", $this->slug);
             $statement->bindParam(":title", $this->title);
             $statement->bindParam(":accessright", $this->accessright);
@@ -204,6 +222,8 @@ class Page extends DataObject
             $statement->bindParam(":menugroup", $this->menugroup);
             $statement->bindParam(":template", $this->template);
             $statement->bindParam(":imagegroup", $this->imagegroup);
+            $statement->bindParam(":promoted", $this->promoted);
+            $statement->bindParam(":priority", $this->priority);
 
             if($statement->execute())
             {
@@ -217,7 +237,7 @@ class Page extends DataObject
         }
         else
         { // update
-            $statement = $gDatabase->prepare("UPDATE page SET slug = :slug, title = :title, accessright = :accessright, revision = :revision, parent = :parent, menugroup = :menugroup, template = :template, imagegroup = :imagegroup WHERE id = :id LIMIT 1;");
+            $statement = $gDatabase->prepare("UPDATE page SET slug = :slug, title = :title, accessright = :accessright, revision = :revision, parent = :parent, menugroup = :menugroup, template = :template, imagegroup = :imagegroup, promoted = :promoted, priority = :priority WHERE id = :id LIMIT 1;");
             $statement->bindParam(":slug", $this->slug);
             $statement->bindParam(":title", $this->title);
             $statement->bindParam(":accessright", $this->accessright);
@@ -226,6 +246,8 @@ class Page extends DataObject
             $statement->bindParam(":menugroup", $this->menugroup);
             $statement->bindParam(":template", $this->template);
             $statement->bindParam(":imagegroup", $this->imagegroup);
+            $statement->bindParam(":promoted", $this->promoted);
+            $statement->bindParam(":priority", $this->priority);
 
             $statement->bindParam(":id", $this->id);
 
