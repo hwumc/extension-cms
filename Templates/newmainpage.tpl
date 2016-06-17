@@ -141,7 +141,7 @@
         {foreach from=$cmsImageGroupFiles item="file" name="carouselimages"}
         <div class="item{if $smarty.foreach.carouselimages.first} active{/if}">
             <img src="{$file->getDownloadPath()}" alt="{$file->getName()}">
-			<p class="headerCopyright" >{$file->getCopyright()|escape}</p>
+			<span class="headerCopyright" >{$file->getCopyright()|escape}</span>
         </div>
         {/foreach}
     </div>
