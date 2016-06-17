@@ -20,12 +20,13 @@
         }
     }
 
-	p.headerCopyright {
+	span.headerCopyright {
 		color: white;
 		position: relative;
 		text-shadow: 0 0 1px #000;
 		font-size:smaller;
 		text-align: right;
+		display: block;
 	}
 </style>
 
