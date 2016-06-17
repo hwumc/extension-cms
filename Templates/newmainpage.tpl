@@ -19,6 +19,14 @@
             padding-right: 5px;
         }
     }
+
+	p.headerCopyright {
+		color: white;
+		position: relative;
+		text-shadow: 0 0 1px #000;
+		font-size:smaller;
+		text-align: right;
+	}
 </style>
 
 {/block}
@@ -133,6 +141,7 @@
         {foreach from=$cmsImageGroupFiles item="file" name="carouselimages"}
         <div class="item{if $smarty.foreach.carouselimages.first} active{/if}">
             <img src="{$file->getDownloadPath()}" alt="{$file->getName()}">
+			<p class="headerCopyright" >{$file->getCopyright()|escape}</p>
         </div>
         {/foreach}
     </div>
