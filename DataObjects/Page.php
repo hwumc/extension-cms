@@ -127,8 +127,11 @@ class Page extends DataObject
     public function getMenuGroup()
     {
         return $this->menugroup;   
-    }    
-    
+    }
+
+    /**
+     * @return MenuGroup
+     */
     public function getMenuGroupObject()
     {
         return MenuGroup::getById($this->menugroup);   
